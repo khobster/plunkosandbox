@@ -6,7 +6,7 @@
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    position: relative; /* Ensure relative positioning for dropdown alignment */
+    position: relative;
 }
 
 .title-container h1 {
@@ -24,9 +24,9 @@
     font-size: 14px;
     background: pink;
     border-radius: 50%;
-    width: 24px; /* Increase width for easier tapping */
-    height: 24px; /* Increase height for easier tapping */
-    line-height: 24px; /* Adjust line height */
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
     text-align: center;
     color: white;
 }
@@ -77,7 +77,7 @@
     width: 90%;
     padding: 8px;
     margin-top: 10px;
-    margin-bottom: 0; /* Remove bottom margin to avoid gray line */
+    margin-bottom: 0;
     border: 2px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
@@ -97,7 +97,7 @@
     transition: background-color 0.3s;
     font-family: 'Archivo Narrow', sans-serif;
     display: block;
-    margin: 10px auto; /* Add margin for spacing */
+    margin: 10px auto;
 }
 
 #submitBtn:hover {
@@ -112,6 +112,17 @@
     border-radius: 4px;
     font-size: 18px;
     font-family: 'Archivo Narrow', sans-serif;
+}
+
+#plunkosCounter {
+    font-size: 18px;
+    font-family: 'Archivo Narrow', sans-serif;
+    margin-top: 10px;
+    color: #4CAF50;
+}
+
+#plunkosCount {
+    font-weight: bold;
 }
 
 .correct {
@@ -155,7 +166,7 @@
 }
 
 #copyButton, #returnButton {
-    display: none; /* Hide buttons initially */
+    display: none;
 }
 
 #suggestions {
@@ -164,13 +175,13 @@
     border: 1px solid #ddd;
     max-height: 150px;
     overflow-y: auto;
-    width: 90%; /* Match the width of the input field */
+    width: 90%;
     z-index: 1000;
-    margin-top: 0; /* Adjust margin to remove space between input and suggestions */
+    margin-top: 0;
     left: 50%;
-    transform: translateX(-50%); /* Center align the dropdown */
-    font-family: 'Archivo Narrow', sans-serif; /* Match font */
-    font-size: 14px; /* Match font size */
+    transform: translateX(-50%);
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 14px;
 }
 
 .suggestion-item {
