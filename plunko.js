@@ -68,7 +68,6 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             document.getElementById('copyButton').style.display = 'inline-block';
             document.getElementById('returnButton').style.display = 'inline-block';
             consecutivePlunkos++;
-            updatePlunkoCounter();
             increaseDifficulty();
             correctStreakStandard = 0; // Reset the correct streak after achieving PLUNKO
             lastThreeCorrectStandard = []; // Clear the list of last three correct players after achieving PLUNKO
@@ -85,14 +84,10 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
 }
 
-function updatePlunkoCounter() {
-    document.getElementById('plunkoCounter').textContent = consecutivePlunkos;
-}
-
 function increaseDifficulty() {
     currentDifficultyLevel++;
-    const maxRarity = currentDifficultyLevel * 0.001; // Adjust this multiplier to control difficulty ramp
-    playersData = playersData.filter(player => player.rarity_score <= maxRarity);
+    const easyPlayers = playersData.slice(0, currentDifficultyLevel * 100);
+    playersData = easyPlayers.length > 0 ? easyPlayers : playersData; // Ensure there's always some players
 }
 
 function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement, nextPlayerCallback, playerIndex, totalPlayers) {
@@ -133,7 +128,6 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 document.getElementById('returnButton').style.display = 'inline-block';
                 document.getElementById('submitBtn').style.display = 'none';
                 consecutivePlunkos++;
-                updatePlunkoCounter();
                 increaseDifficulty();
                 correctStreakURL = 0; // Reset the correct streak after achieving PLUNKO
                 lastThreeCorrectURL = []; // Clear the list of last three correct players after achieving PLUNKO
@@ -169,7 +163,7 @@ function copyToClipboard() {
 }
 
 function loadPlayersData() {
-    fetch('https://raw.githubusercontent.com/khobster/plunkosandbox/main/updated_test_data_with_rarity_adjusted.json')
+    fetch('https://raw.githubusercontent.com/khobster/plunko/main/updated_test_data_with_rarity.json')
         .then(response => response.json())
         .then(data => {
             playersData = data;
@@ -200,7 +194,7 @@ function startStandardPlay() {
 
 function displayRandomPlayer() {
     if (playersData.length > 0) {
-        const randomIndex = Math.floor(Math.random() * Math.min(playersData.length, currentDifficultyLevel * 100));
+        const randomIndex = Math.floor(Math.random() * (currentDifficultyLevel * 100));
         const player = playersData[randomIndex];
         document.getElementById('playerName').textContent = player.name;
         document.getElementById('collegeGuess').value = '';
