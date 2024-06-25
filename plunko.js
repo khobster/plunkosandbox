@@ -87,7 +87,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
 }
 
 function increaseDifficulty() {
-    currentDifficultyLevel++;
+    currentDifficultyLevel += 0.1; // Increment by a smaller step for more gradual difficulty increase
     playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel);
 }
 
@@ -170,6 +170,7 @@ function loadPlayersData() {
         .then(data => {
             playersData = data;
             playersData.sort((a, b) => a.rarity_score - b.rarity_score); // Sort by rarity score
+            playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel); // Filter initial players
             const urlPlayers = getPlayersFromURL();
             if (urlPlayers.length > 0) {
                 startURLChallenge(urlPlayers);
