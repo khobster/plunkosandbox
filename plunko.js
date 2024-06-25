@@ -3,7 +3,9 @@ let correctStreakStandard = 0;
 let lastThreeCorrectStandard = [];
 let correctStreakURL = 0;
 let lastThreeCorrectURL = [];
-let consecutivePlunkos = 0; // New counter for consecutive Plunkos
+let currentDifficultyLevel = 1;
+let consecutivePlunkos = 0;
+
 const correctSound = new Audio('https://vanillafrosting.agency/wp-content/uploads/2023/11/bing-bong.mp3');
 const wrongSound = new Audio('https://vanillafrosting.agency/wp-content/uploads/2023/11/incorrect-answer-for-plunko.mp3');
 
@@ -57,7 +59,6 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             resultElement.innerHTML = "That's <span style='color: yellow;'>CORRECT!</span> Now you need to get just one more to get a <span class='kaboom'>PLUNKO!</span>";
         } else if (correctStreakStandard === 3) {
             resultElement.innerHTML = "<span class='kaboom'>PLUNKO!</span>";
-            consecutivePlunkos++; // Increment consecutive Plunkos counter
             const encodedPlayers = encodeURIComponent(lastThreeCorrectStandard.join(','));
             const shareLink = `https://khobster.github.io/plunko?players=${encodedPlayers}`;
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
@@ -66,6 +67,8 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             document.getElementById('snippetMessage').style.display = 'block';
             document.getElementById('copyButton').style.display = 'inline-block';
             document.getElementById('returnButton').style.display = 'inline-block';
+            consecutivePlunkos++;
+            increaseDifficulty();
             correctStreakStandard = 0; // Reset the correct streak after achieving PLUNKO
             lastThreeCorrectStandard = []; // Clear the list of last three correct players after achieving PLUNKO
         }
@@ -79,6 +82,11 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         wrongSound.play();
     }
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
+}
+
+function increaseDifficulty() {
+    currentDifficultyLevel++;
+    playersData = playersData.slice(0, currentDifficultyLevel * 100); // Gradually include more difficult players
 }
 
 function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement, nextPlayerCallback, playerIndex, totalPlayers) {
@@ -108,7 +116,6 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
             console.log('Appended message element to resultElement:', resultElement.innerHTML);
 
             // Add share snippet and buttons
-            consecutivePlunkos++; // Increment consecutive Plunkos counter
             const encodedPlayers = encodeURIComponent(lastThreeCorrectURL.join(','));
             const shareLink = `https://khobster.github.io/plunko?players=${encodedPlayers}`;
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
@@ -119,6 +126,8 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 document.getElementById('copyButton').style.display = 'inline-block';
                 document.getElementById('returnButton').style.display = 'inline-block';
                 document.getElementById('submitBtn').style.display = 'none';
+                consecutivePlunkos++;
+                increaseDifficulty();
                 correctStreakURL = 0; // Reset the correct streak after achieving PLUNKO
                 lastThreeCorrectURL = []; // Clear the list of last three correct players after achieving PLUNKO
             }, 1000);
@@ -153,10 +162,11 @@ function copyToClipboard() {
 }
 
 function loadPlayersData() {
-    fetch('updated_test_data_with_rarity.json')
+    fetch('https://raw.githubusercontent.com/khobster/plunko/main/updated_test_data_with_rarity.json')
         .then(response => response.json())
         .then(data => {
             playersData = data;
+            playersData.sort((a, b) => a.rarity_score - b.rarity_score); // Sort by rarity score
             const urlPlayers = getPlayersFromURL();
             if (urlPlayers.length > 0) {
                 startURLChallenge(urlPlayers);
@@ -183,11 +193,8 @@ function startStandardPlay() {
 
 function displayRandomPlayer() {
     if (playersData.length > 0) {
-        const sortedPlayers = playersData.sort((a, b) => a.rarity_score - b.rarity_score);
-        const threshold = consecutivePlunkos < 3 ? 5 : 10;
-        const selectedPlayers = sortedPlayers.filter(player => player.rarity_score <= threshold);
-        const randomIndex = Math.floor(Math.random() * selectedPlayers.length);
-        const player = selectedPlayers[randomIndex];
+        const randomIndex = Math.floor(Math.random() * playersData.length);
+        const player = playersData[randomIndex];
         document.getElementById('playerName').textContent = player.name;
         document.getElementById('collegeGuess').value = '';
         document.getElementById('result').textContent = '';
