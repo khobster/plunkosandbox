@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&display=swap');
+
+#app {
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative; /* Ensure relative positioning for dropdown alignment */
+}
+
+.title-container h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-family: 'Archivo Narrow', sans-serif;
+    position: relative;
+}
+
+.tooltip {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 14px;
+    background: pink;
+    border-radius: 50%;
+    width: 24px; /* Increase width for easier tapping */
+    height: 24px; /* Increase height for easier tapping */
+    line-height: 24px; /* Adjust line height */
+    text-align: center;
+    color: white;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 220px;
+    background-color: lemonchiffon;
+    color: #333;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tooltip:hover .tooltiptext,
+.tooltip.active .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+@media only screen and (max-width: 600px) {
+    .tooltip .tooltiptext {
+        left: 50%;
+        transform: translateX(-50%);
+        top: 30px;
+    }
+}
+
+#playerQuestion {
+    font-size: 18px;
+    font-family: 'Archivo Narrow', sans-serif;
+    margin-bottom: 10px;
+}
+
+#playerName {
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 22px;
+}
+
+#collegeGuess {
+    width: 90%;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 0; /* Remove bottom margin to avoid gray line */
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: 'Archivo Narrow', sans-serif;
+    position: relative;
+}
+
+#submitBtn {
+    background-color: pink;
+    color: #f8f8f8;
+    text-transform: uppercase;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-family: 'Archivo Narrow', sans-serif;
+    display: block;
+    margin: 10px auto; /* Add margin for spacing */
+}
+
+#submitBtn:hover {
+    background-color: #ff69b4;
+}
+
+#result {
+    margin-top: 10px;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 18px;
+    font-family: 'Archivo Narrow', sans-serif;
+}
+
+.correct {
+    background-color: green;
+    font-family: 'Anton', sans-serif;
+    animation: blinkRainbow 1s infinite;
+}
+
+.incorrect {
+    background-color: red;
+    font-family: 'Anton', sans-serif;
+}
+
+#shareSnippet {
+    margin-top: 10px;
+    padding: 10px;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-family: 'Archivo Narrow', sans-serif;
+}
+
+#copyButton, #returnButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: background-color 0.3s;
+    font-family: 'Archivo Narrow', sans-serif;
+}
+
+#copyButton:hover, #returnButton:hover {
+    background-color: #45a049;
+}
+
+#copyButton, #returnButton {
+    display: none; /* Hide buttons initially */
+}
+
+#suggestions {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 90%; /* Match the width of the input field */
+    z-index: 1000;
+    margin-top: 0; /* Adjust margin to remove space between input and suggestions */
+    left: 50%;
+    transform: translateX(-50%); /* Center align the dropdown */
+    font-family: 'Archivo Narrow', sans-serif; /* Match font */
+    font-size: 14px; /* Match font size */
+}
+
+.suggestion-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+@media only screen and (max-width: 600px) {
+    #app {
+        font-size: 16px;
+    }
+    .game-image {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+@keyframes blinkRainbow {
+    0% {background-color: red;}
+    20% {background-color: orange;}
+    40% {background-color: yellow;}
+    60% {background-color: green;}
+    80% {background-color: blue;}
+    100% {background-color: violet;}
+}
+
+.kaboom {
+    font-size: 24px;
+    font-family: 'Anton', sans-serif;
+    color: white;
+    background-color: rainbow;
+    animation: kaboomEffect 2s infinite;
+}
+
+@keyframes kaboomEffect {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.2);}
+    100% {transform: scale(1);}
+}
+
+#snippetMessage {
+    font-family: 'Archivo Narrow', sans-serif;
+}
