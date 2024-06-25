@@ -86,7 +86,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
 
 function increaseDifficulty() {
     currentDifficultyLevel++;
-    playersData = playersData.slice(0, currentDifficultyLevel * 100); // Gradually include more difficult players
+    playersData = playersData.slice(0, currentDifficultyLevel * 50); // Gradually include more difficult players
 }
 
 function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement, nextPlayerCallback, playerIndex, totalPlayers) {
@@ -162,7 +162,7 @@ function copyToClipboard() {
 }
 
 function loadPlayersData() {
-    fetch('https://raw.githubusercontent.com/khobster/plunkosandbox/main/updated_test_data_with_rarity.json')
+    fetch('https://raw.githubusercontent.com/khobster/plunko/main/updated_test_data_with_rarity.json')
         .then(response => response.json())
         .then(data => {
             playersData = data;
