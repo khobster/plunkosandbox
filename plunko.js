@@ -169,7 +169,7 @@ function copyToClipboard() {
 }
 
 function loadPlayersData() {
-    fetch('https://raw.githubusercontent.com/khobster/plunko/main/updated_test_data_with_rarity_adjusted.json')
+    fetch('https://raw.githubusercontent.com/khobster/plunkosandbox/main/updated_test_data_with_rarity_adjusted.json')
         .then(response => response.json())
         .then(data => {
             playersData = data;
