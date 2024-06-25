@@ -88,7 +88,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
 
 function increaseDifficulty() {
     currentDifficultyLevel++;
-    playersData = playersData.slice(0, currentDifficultyLevel * 100); // Gradually include more difficult players
+    playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel);
 }
 
 function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement, nextPlayerCallback, playerIndex, totalPlayers) {
