@@ -3,6 +3,7 @@ let correctStreakStandard = 0;
 let lastThreeCorrectStandard = [];
 let correctStreakURL = 0;
 let lastThreeCorrectURL = [];
+let consecutivePlunkos = 0; // New counter for consecutive Plunkos
 const correctSound = new Audio('https://vanillafrosting.agency/wp-content/uploads/2023/11/bing-bong.mp3');
 const wrongSound = new Audio('https://vanillafrosting.agency/wp-content/uploads/2023/11/incorrect-answer-for-plunko.mp3');
 
@@ -56,6 +57,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             resultElement.innerHTML = "That's <span style='color: yellow;'>CORRECT!</span> Now you need to get just one more to get a <span class='kaboom'>PLUNKO!</span>";
         } else if (correctStreakStandard === 3) {
             resultElement.innerHTML = "<span class='kaboom'>PLUNKO!</span>";
+            consecutivePlunkos++; // Increment consecutive Plunkos counter
             const encodedPlayers = encodeURIComponent(lastThreeCorrectStandard.join(','));
             const shareLink = `https://khobster.github.io/plunko?players=${encodedPlayers}`;
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
@@ -106,6 +108,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
             console.log('Appended message element to resultElement:', resultElement.innerHTML);
 
             // Add share snippet and buttons
+            consecutivePlunkos++; // Increment consecutive Plunkos counter
             const encodedPlayers = encodeURIComponent(lastThreeCorrectURL.join(','));
             const shareLink = `https://khobster.github.io/plunko?players=${encodedPlayers}`;
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
@@ -150,7 +153,7 @@ function copyToClipboard() {
 }
 
 function loadPlayersData() {
-    fetch('https://raw.githubusercontent.com/khobster/plunko/main/data.json')
+    fetch('updated_test_data_with_rarity.json')
         .then(response => response.json())
         .then(data => {
             playersData = data;
@@ -180,8 +183,11 @@ function startStandardPlay() {
 
 function displayRandomPlayer() {
     if (playersData.length > 0) {
-        const randomIndex = Math.floor(Math.random() * playersData.length);
-        const player = playersData[randomIndex];
+        const sortedPlayers = playersData.sort((a, b) => a.rarity_score - b.rarity_score);
+        const threshold = consecutivePlunkos < 3 ? 5 : 10;
+        const selectedPlayers = sortedPlayers.filter(player => player.rarity_score <= threshold);
+        const randomIndex = Math.floor(Math.random() * selectedPlayers.length);
+        const player = selectedPlayers[randomIndex];
         document.getElementById('playerName').textContent = player.name;
         document.getElementById('collegeGuess').value = '';
         document.getElementById('result').textContent = '';
