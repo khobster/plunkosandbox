@@ -130,6 +130,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
                 document.getElementById('submitBtn').style.display = 'none';
                 consecutivePlunkos++;
+                document.getElementById('consecutivePlunkos').textContent = `Consecutive Plunkos: ${consecutivePlunkos}`;
                 increaseDifficulty();
                 correctStreakURL = 0; // Reset the correct streak after achieving PLUNKO
                 lastThreeCorrectURL = []; // Clear the list of last three correct players after achieving PLUNKO
