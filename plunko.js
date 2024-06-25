@@ -60,17 +60,20 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         } else if (correctStreakStandard === 3) {
             resultElement.innerHTML = "<span class='kaboom'>PLUNKO!</span>";
             const encodedPlayers = encodeURIComponent(lastThreeCorrectStandard.join(','));
-            const shareLink = `https://khobster.github.io/plunko?players=${encodedPlayers}`;
+            const shareLink = `https://khobster.github.io/plunkosandbox?players=${encodedPlayers}`;
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
             document.getElementById('shareSnippet').innerHTML = shareText;
             document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
             document.getElementById('snippetMessage').style.display = 'block';
             document.getElementById('copyButton').style.display = 'inline-block';
             document.getElementById('returnButton').style.display = 'inline-block';
-            consecutivePlunkos++;
-            increaseDifficulty();
+            document.getElementById('playerQuestion').style.display = 'none';
+            document.getElementById('playerName').style.display = 'none';
+            document.getElementById('collegeGuess').style.display = 'none';
             correctStreakStandard = 0; // Reset the correct streak after achieving PLUNKO
             lastThreeCorrectStandard = []; // Clear the list of last three correct players after achieving PLUNKO
+            consecutivePlunkos++;
+            document.getElementById('consecutivePlunkos').textContent = consecutivePlunkos;
         }
         resultElement.className = 'correct';
         correctSound.play();
@@ -80,14 +83,14 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
         wrongSound.play();
+        document.getElementById('returnButton').textContent = 'Play Again';
     }
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
 }
 
 function increaseDifficulty() {
     currentDifficultyLevel++;
-    const easyPlayers = playersData.slice(0, currentDifficultyLevel * 100);
-    playersData = easyPlayers.length > 0 ? easyPlayers : playersData; // Ensure there's always some players
+    playersData = playersData.slice(0, currentDifficultyLevel * 100); // Gradually include more difficult players
 }
 
 function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement, nextPlayerCallback, playerIndex, totalPlayers) {
@@ -118,7 +121,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
 
             // Add share snippet and buttons
             const encodedPlayers = encodeURIComponent(lastThreeCorrectURL.join(','));
-            const shareLink = `https://khobster.github.io/plunko?players=${encodedPlayers}`;
+            const shareLink = `https://khobster.github.io/plunkosandbox?players=${encodedPlayers}`;
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
             setTimeout(() => {
                 document.getElementById('shareSnippet').innerHTML = shareText;
@@ -127,8 +130,11 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 document.getElementById('copyButton').style.display = 'inline-block';
                 document.getElementById('returnButton').style.display = 'inline-block';
                 document.getElementById('submitBtn').style.display = 'none';
+                document.getElementById('playerQuestion').style.display = 'none';
+                document.getElementById('playerName').style.display = 'none';
+                document.getElementById('collegeGuess').style.display = 'none';
                 consecutivePlunkos++;
-                increaseDifficulty();
+                document.getElementById('consecutivePlunkos').textContent = consecutivePlunkos;
                 correctStreakURL = 0; // Reset the correct streak after achieving PLUNKO
                 lastThreeCorrectURL = []; // Clear the list of last three correct players after achieving PLUNKO
             }, 1000);
@@ -163,7 +169,7 @@ function copyToClipboard() {
 }
 
 function loadPlayersData() {
-    fetch('https://raw.githubusercontent.com/khobster/plunkosandbox/main/updated_test_data_with_rarity.json')
+    fetch('https://raw.githubusercontent.com/khobster/plunko/main/updated_test_data_with_rarity.json')
         .then(response => response.json())
         .then(data => {
             playersData = data;
@@ -194,7 +200,7 @@ function startStandardPlay() {
 
 function displayRandomPlayer() {
     if (playersData.length > 0) {
-        const randomIndex = Math.floor(Math.random() * (currentDifficultyLevel * 100));
+        const randomIndex = Math.floor(Math.random() * Math.min(playersData.length, 50)); // Start with the easiest 50 players
         const player = playersData[randomIndex];
         document.getElementById('playerName').textContent = player.name;
         document.getElementById('collegeGuess').value = '';
@@ -298,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('copyButton').addEventListener('click', copyToClipboard);
     document.getElementById('returnButton').addEventListener('click', () => {
-        window.location.href = 'https://khobster.github.io/plunko';
+        window.location.href = 'https://khobster.github.io/plunkosandbox';
     });
 
     // Tooltip handling for mobile
