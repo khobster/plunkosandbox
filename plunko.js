@@ -63,7 +63,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             const shareLink = `https://khobster.github.io/plunkosandbox?players=${encodedPlayers}`;
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
             document.getElementById('shareSnippet').innerHTML = shareText;
-            document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
+            document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
             document.getElementById('snippetMessage').style.display = 'block';
             document.getElementById('copyButton').style.display = 'inline-block';
             consecutivePlunkos++;
