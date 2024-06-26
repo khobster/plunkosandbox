@@ -59,14 +59,6 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             resultElement.innerHTML = "That's <span style='color: yellow;'>CORRECT!</span> Now you need to get just one more to get a <span class='kaboom'>PLUNKO!</span>";
         } else if (correctStreakStandard === 3) {
             resultElement.innerHTML = "<span class='kaboom'>PLUNKO!</span>";
-            const encodedPlayers = encodeURIComponent(lastThreeCorrectStandard.join(','));
-            const shareLink = `https://khobster.github.io/plunkosandbox?players=${encodedPlayers}`;
-            let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
-            document.getElementById('shareSnippet').innerHTML = shareText;
-            document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
-            document.getElementById('snippetMessage').style.display = 'block';
-            document.getElementById('shareSnippet').style.display = 'block';
-            document.getElementById('copyButton').style.display = 'inline-block';
             consecutivePlunkos++;
             document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
             increaseDifficulty();
@@ -80,9 +72,6 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         lastThreeCorrectStandard = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
-        document.getElementById('snippetMessage').style.display = 'none';
-        document.getElementById('shareSnippet').style.display = 'none';
-        document.getElementById('copyButton').style.display = 'none';
         wrongSound.play();
     }
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
@@ -119,15 +108,8 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
             resultElement.className = 'correct';
             console.log('Appended message element to resultElement:', resultElement.innerHTML);
 
-            // Add share snippet and buttons
-            const encodedPlayers = encodeURIComponent(lastThreeCorrectURL.join(','));
-            const shareLink = `https://khobster.github.io/plunkosandbox?players=${encodedPlayers}`;
-            let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
+            // Add buttons
             setTimeout(() => {
-                document.getElementById('shareSnippet').innerHTML = shareText;
-                document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
-                document.getElementById('snippetMessage').style.display = 'block';
-                document.getElementById('shareSnippet').style.display = 'block';
                 document.getElementById('copyButton').style.display = 'inline-block';
                 document.getElementById('returnButton').style.display = 'inline-block';
                 document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
@@ -153,9 +135,6 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         lastThreeCorrectURL = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
-        document.getElementById('snippetMessage').style.display = 'none';
-        document.getElementById('shareSnippet').style.display = 'none';
-        document.getElementById('copyButton').style.display = 'none';
         wrongSound.play();
         endURLChallenge(false);
     }
@@ -194,10 +173,9 @@ function loadPlayersData() {
 function startStandardPlay() {
     displayRandomPlayer();
     document.getElementById('submitBtn').onclick = function() {
-        // Hide the snippet and copy button on the next question attempt
-        document.getElementById('snippetMessage').style.display = 'none';
-        document.getElementById('shareSnippet').style.display = 'none';
+        // Hide the copy button on the next question attempt
         document.getElementById('copyButton').style.display = 'none';
+        document.getElementById('returnButton').style.display = 'none';
 
         const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
         const playerName = document.getElementById('playerName').textContent;
@@ -239,10 +217,9 @@ function startURLChallenge(playerNames) {
             if (player) {
                 displayPlayer(player);
                 document.getElementById('submitBtn').onclick = function() {
-                    // Hide the snippet and copy button on the next question attempt
-                    document.getElementById('snippetMessage').style.display = 'none';
-                    document.getElementById('shareSnippet').style.display = 'none';
+                    // Hide the copy button on the next question attempt
                     document.getElementById('copyButton').style.display = 'none';
+                    document.getElementById('returnButton').style.display = 'none';
 
                     const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
                     let isCorrect = player && isCloseMatch(userGuess, player.college || 'No College');
@@ -267,13 +244,6 @@ function endURLChallenge(success) {
         resultElement.innerHTML = "You didn't get all 3 correct. Better luck next time!";
         resultElement.className = 'incorrect';
     }
-    const shareText = success ? "I got all 3 correct on PLUNKO!" : "I couldn't get all 3 correct on PLUNK🏀. Can you?";
-    const currentURL = window.location.href;
-    let shareSnippet = `${shareText}<br>${currentURL}`;
-    document.getElementById('shareSnippet').innerHTML = shareSnippet;
-    document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
-    document.getElementById('snippetMessage').style.display = 'block';
-    document.getElementById('shareSnippet').style.display = 'block';
     document.getElementById('copyButton').style.display = 'inline-block';
     document.getElementById('returnButton').style.display = 'inline-block';
     document.getElementById('returnButton').textContent = 'Play again';
