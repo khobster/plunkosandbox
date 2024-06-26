@@ -67,7 +67,6 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             document.getElementById('snippetMessage').style.display = 'block'; // Show the message
             document.getElementById('shareSnippet').style.display = 'block'; // Show the share snippet
             document.getElementById('copyButton').style.display = 'inline-block';
-            document.getElementById('returnButton').style.display = 'inline-block'; // Show the return button
             consecutivePlunkos++;
             document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
             increaseDifficulty();
@@ -84,7 +83,6 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         document.getElementById('snippetMessage').style.display = 'none';
         document.getElementById('shareSnippet').style.display = 'none';
         document.getElementById('copyButton').style.display = 'none';
-        document.getElementById('returnButton').style.display = 'none'; // Hide the return button
         wrongSound.play();
     }
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
@@ -189,6 +187,10 @@ function loadPlayersData() {
 
 function startStandardPlay() {
     displayRandomPlayer();
+
+    // Hide the return button at the start of standard play
+    document.getElementById('returnButton').style.display = 'none';
+
     document.getElementById('submitBtn').onclick = function() {
         // Hide the snippet and copy button on the next question attempt
         document.getElementById('snippetMessage').style.display = 'none';
