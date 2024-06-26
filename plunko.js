@@ -130,6 +130,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 increaseDifficulty();
                 correctStreakURL = 0; // Reset the correct streak after achieving PLUNKO
                 lastThreeCorrectURL = []; // Clear the list of last three correct players after achieving PLUNKO
+                endURLChallenge(true); // call the function right away on PLUNKO
             }, 1000);
 
             correctSound.play();
@@ -150,7 +151,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         document.getElementById('returnButton').style.display = 'inline-block';
         document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
         wrongSound.play();
-        endURLChallenge(false);
+        endURLChallenge(false); // call the function right away on incorrect answer
     }
 }
 
