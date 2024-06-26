@@ -124,7 +124,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
             setTimeout(() => {
                 document.getElementById('shareSnippet').innerHTML = shareText;
-                document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
+                document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
                 document.getElementById('snippetMessage').style.display = 'block';
                 document.getElementById('shareSnippet').style.display = 'block';
                 document.getElementById('copyButton').style.display = 'inline-block';
