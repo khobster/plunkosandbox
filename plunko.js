@@ -79,16 +79,16 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         lastThreeCorrectStandard = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
+        document.getElementById('snippetMessage').style.display = 'none';
+        document.getElementById('copyButton').style.display = 'none';
         wrongSound.play();
-        consecutivePlunkos = 0; // Reset the consecutive plunkos on wrong answer
-        document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
     }
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
 }
 
 function increaseDifficulty() {
     currentDifficultyLevel += 0.1; // Increment by a smaller step for more gradual difficulty increase
-    playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel);
+    playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel || (player.games_played > 500 && player.retirement_year < 2000));
 }
 
 function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement, nextPlayerCallback, playerIndex, totalPlayers) {
@@ -126,6 +126,8 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
                 document.getElementById('snippetMessage').style.display = 'block';
                 document.getElementById('copyButton').style.display = 'inline-block';
+                document.getElementById('returnButton').style.display = 'inline-block';
+                document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
                 document.getElementById('submitBtn').style.display = 'none';
                 consecutivePlunkos++;
                 document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
@@ -148,9 +150,9 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         lastThreeCorrectURL = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
+        document.getElementById('snippetMessage').style.display = 'none';
+        document.getElementById('copyButton').style.display = 'none';
         wrongSound.play();
-        consecutivePlunkos = 0; // Reset the consecutive plunkos on wrong answer
-        document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
         endURLChallenge(false);
     }
 }
@@ -171,7 +173,7 @@ function loadPlayersData() {
         .then(data => {
             playersData = data;
             playersData.sort((a, b) => a.rarity_score - b.rarity_score); // Sort by rarity score
-            playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel); // Filter initial players
+            playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel || (player.games_played > 500 && player.retirement_year < 2000)); // Filter initial players
             const urlPlayers = getPlayersFromURL();
             if (urlPlayers.length > 0) {
                 startURLChallenge(urlPlayers);
@@ -258,6 +260,8 @@ function endURLChallenge(success) {
     document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
     document.getElementById('snippetMessage').style.display = 'block';
     document.getElementById('copyButton').style.display = 'inline-block';
+    document.getElementById('returnButton').style.display = 'inline-block';
+    document.getElementById('returnButton').textContent = 'Play again';
     document.getElementById('submitBtn').style.display = 'none';
 }
 
