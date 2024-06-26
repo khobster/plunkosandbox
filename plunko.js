@@ -64,8 +64,8 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
             document.getElementById('shareSnippet').innerHTML = shareText;
             document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
-            document.getElementById('snippetMessage').style.display = 'none'; // Hide the snippet message
-            document.getElementById('shareSnippet').style.display = 'none'; // Hide the share snippet
+            document.getElementById('snippetMessage').style.display = 'block'; // Show the message
+            document.getElementById('shareSnippet').style.display = 'block'; // Show the share snippet
             document.getElementById('copyButton').style.display = 'inline-block';
             consecutivePlunkos++;
             document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
