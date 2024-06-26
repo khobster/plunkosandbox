@@ -79,11 +79,10 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         lastThreeCorrectStandard = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
+        document.getElementById('snippetMessage').style.display = 'none';
+        document.getElementById('copyButton').style.display = 'none';
         wrongSound.play();
     }
-    // Hide the snippet and copy button after a new guess
-    document.getElementById('snippetMessage').style.display = 'none';
-    document.getElementById('copyButton').style.display = 'none';
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
 }
 
