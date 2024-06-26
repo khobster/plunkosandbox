@@ -79,6 +79,9 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         lastThreeCorrectStandard = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
+        document.getElementById('snippetMessage').style.display = 'none';
+        document.getElementById('shareSnippet').style.display = 'none';
+        document.getElementById('copyButton').style.display = 'none';
         wrongSound.play();
     }
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
@@ -123,6 +126,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 document.getElementById('shareSnippet').innerHTML = shareText;
                 document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
                 document.getElementById('snippetMessage').style.display = 'block';
+                document.getElementById('shareSnippet').style.display = 'block';
                 document.getElementById('copyButton').style.display = 'inline-block';
                 document.getElementById('returnButton').style.display = 'inline-block';
                 document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
@@ -148,6 +152,9 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         lastThreeCorrectURL = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
+        document.getElementById('snippetMessage').style.display = 'none';
+        document.getElementById('shareSnippet').style.display = 'none';
+        document.getElementById('copyButton').style.display = 'none';
         wrongSound.play();
         endURLChallenge(false);
     }
@@ -186,8 +193,9 @@ function loadPlayersData() {
 function startStandardPlay() {
     displayRandomPlayer();
     document.getElementById('submitBtn').onclick = function() {
-        // Hide the snippet and copy button on next question attempt
+        // Hide the snippet and copy button on the next question attempt
         document.getElementById('snippetMessage').style.display = 'none';
+        document.getElementById('shareSnippet').style.display = 'none';
         document.getElementById('copyButton').style.display = 'none';
 
         const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
@@ -230,8 +238,9 @@ function startURLChallenge(playerNames) {
             if (player) {
                 displayPlayer(player);
                 document.getElementById('submitBtn').onclick = function() {
-                    // Hide the snippet and copy button on next question attempt
+                    // Hide the snippet and copy button on the next question attempt
                     document.getElementById('snippetMessage').style.display = 'none';
+                    document.getElementById('shareSnippet').style.display = 'none';
                     document.getElementById('copyButton').style.display = 'none';
 
                     const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
@@ -263,6 +272,7 @@ function endURLChallenge(success) {
     document.getElementById('shareSnippet').innerHTML = shareSnippet;
     document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
     document.getElementById('snippetMessage').style.display = 'block';
+    document.getElementById('shareSnippet').style.display = 'block';
     document.getElementById('copyButton').style.display = 'inline-block';
     document.getElementById('returnButton').style.display = 'inline-block';
     document.getElementById('returnButton').textContent = 'Play again';
