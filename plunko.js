@@ -66,6 +66,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
             document.getElementById('snippetMessage').style.display = 'block';
             document.getElementById('copyButton').style.display = 'inline-block';
+            document.getElementById('returnButton').style.display = 'inline-block';
             consecutivePlunkos++;
             document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
             increaseDifficulty();
@@ -79,16 +80,17 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         lastThreeCorrectStandard = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
-        document.getElementById('snippetMessage').style.display = 'none';
-        document.getElementById('copyButton').style.display = 'none';
         wrongSound.play();
     }
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
+    document.getElementById('snippetMessage').style.display = 'none'; // Hide the snippet message when the next question starts
+    document.getElementById('shareSnippet').innerHTML = ''; // Clear the share snippet
+    document.getElementById('copyButton').style.display = 'none'; // Hide the copy button
 }
 
 function increaseDifficulty() {
     currentDifficultyLevel += 0.1; // Increment by a smaller step for more gradual difficulty increase
-    playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel || (player.games_played > 500 && player.retirement_year < 2000));
+    playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel);
 }
 
 function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement, nextPlayerCallback, playerIndex, totalPlayers) {
@@ -150,8 +152,6 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         lastThreeCorrectURL = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
-        document.getElementById('snippetMessage').style.display = 'none';
-        document.getElementById('copyButton').style.display = 'none';
         wrongSound.play();
         endURLChallenge(false);
     }
@@ -168,12 +168,12 @@ function copyToClipboard() {
 }
 
 function loadPlayersData() {
-    fetch('https://raw.githubusercontent.com/khobster/plunkosandbox/main/updated_test_data_with_rarity.json')
+    fetch('https://raw.githubusercontent.com/khobster/plunko/main/updated_test_data_with_rarity.json')
         .then(response => response.json())
         .then(data => {
             playersData = data;
             playersData.sort((a, b) => a.rarity_score - b.rarity_score); // Sort by rarity score
-            playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel || (player.games_played > 500 && player.retirement_year < 2000)); // Filter initial players
+            playersData = playersData.filter(player => player.rarity_score <= currentDifficultyLevel); // Filter initial players
             const urlPlayers = getPlayersFromURL();
             if (urlPlayers.length > 0) {
                 startURLChallenge(urlPlayers);
