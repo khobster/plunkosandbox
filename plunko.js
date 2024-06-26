@@ -47,6 +47,10 @@ function isCloseMatch(guess, answer) {
 }
 
 function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultElement, nextPlayerCallback) {
+    // Hide the snippet and copy button on next question attempt
+    document.getElementById('snippetMessage').style.display = 'none';
+    document.getElementById('copyButton').style.display = 'none';
+
     if (isCorrect) {
         correctStreakStandard++;
         lastThreeCorrectStandard.push(playerName);
@@ -81,9 +85,6 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         resultElement.className = 'incorrect';
         wrongSound.play();
     }
-    // Hide the snippet and copy button on next question attempt
-    document.getElementById('snippetMessage').style.display = 'none';
-    document.getElementById('copyButton').style.display = 'none';
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
 }
 
@@ -99,6 +100,10 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         playerName,
         totalPlayers
     });
+
+    // Hide the snippet and copy button on next question attempt
+    document.getElementById('snippetMessage').style.display = 'none';
+    document.getElementById('copyButton').style.display = 'none';
 
     if (isCorrect) {
         correctStreakURL++;
@@ -154,9 +159,6 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         wrongSound.play();
         endURLChallenge(false);
     }
-    // Hide the snippet and copy button on next question attempt
-    document.getElementById('snippetMessage').style.display = 'none';
-    document.getElementById('copyButton').style.display = 'none';
 }
 
 function copyToClipboard() {
