@@ -67,6 +67,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             document.getElementById('snippetMessage').style.display = 'block'; // Show the message
             document.getElementById('shareSnippet').style.display = 'block'; // Show the share snippet
             document.getElementById('copyButton').style.display = 'inline-block';
+            document.getElementById('returnButton').style.display = 'inline-block'; // Show the return button
             consecutivePlunkos++;
             document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
             increaseDifficulty();
@@ -83,6 +84,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         document.getElementById('snippetMessage').style.display = 'none';
         document.getElementById('shareSnippet').style.display = 'none';
         document.getElementById('copyButton').style.display = 'none';
+        document.getElementById('returnButton').style.display = 'none'; // Hide the return button
         wrongSound.play();
     }
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
@@ -119,7 +121,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
             resultElement.className = 'correct';
             console.log('Appended message element to resultElement:', resultElement.innerHTML);
 
-            // Add buttons
+            // Add share snippet and buttons
             setTimeout(() => {
                 document.getElementById('copyButton').style.display = 'inline-block';
                 document.getElementById('returnButton').style.display = 'inline-block';
