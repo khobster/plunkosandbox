@@ -81,8 +81,9 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         resultElement.className = 'incorrect';
         wrongSound.play();
     }
-    document.getElementById('snippetMessage').style.display = 'none'; // Hide the snippet message after each guess
-    document.getElementById('copyButton').style.display = 'none'; // Hide the copy button after each guess
+    // Hide the snippet and copy button after a new guess
+    document.getElementById('snippetMessage').style.display = 'none';
+    document.getElementById('copyButton').style.display = 'none';
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
 }
 
@@ -150,8 +151,8 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         lastThreeCorrectURL = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
-        document.getElementById('snippetMessage').style.display = 'none'; // Hide the snippet message after each guess
-        document.getElementById('copyButton').style.display = 'none'; // Hide the copy button after each guess
+        document.getElementById('snippetMessage').style.display = 'none';
+        document.getElementById('copyButton').style.display = 'none';
         wrongSound.play();
         endURLChallenge(false);
     }
@@ -195,9 +196,6 @@ function startStandardPlay() {
         const player = playersData.find(p => p.name === playerName);
         let isCorrect = player && isCloseMatch(userGuess, player.college || 'No College');
         updateStreakAndGenerateSnippetStandard(isCorrect, playerName, document.getElementById('result'), displayRandomPlayer);
-        // Hide the snippet and copy button after a new guess
-        document.getElementById('snippetMessage').style.display = 'none';
-        document.getElementById('copyButton').style.display = 'none';
     };
 }
 
