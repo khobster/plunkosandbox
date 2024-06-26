@@ -64,7 +64,8 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
             document.getElementById('shareSnippet').innerHTML = shareText;
             document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
-            document.getElementById('snippetMessage').style.display = 'block';
+            document.getElementById('snippetMessage').style.display = 'none'; // Hide the snippet message
+            document.getElementById('shareSnippet').style.display = 'none'; // Hide the share snippet
             document.getElementById('copyButton').style.display = 'inline-block';
             consecutivePlunkos++;
             document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
@@ -118,15 +119,8 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
             resultElement.className = 'correct';
             console.log('Appended message element to resultElement:', resultElement.innerHTML);
 
-            // Add share snippet and buttons
-            const encodedPlayers = encodeURIComponent(lastThreeCorrectURL.join(','));
-            const shareLink = `https://khobster.github.io/plunkosandbox?players=${encodedPlayers}`;
-            let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
+            // Add buttons
             setTimeout(() => {
-                document.getElementById('shareSnippet').innerHTML = shareText;
-                document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
-                document.getElementById('snippetMessage').style.display = 'none'; // Hide the snippet message
-                document.getElementById('shareSnippet').style.display = 'none'; // Hide the share snippet
                 document.getElementById('copyButton').style.display = 'inline-block';
                 document.getElementById('returnButton').style.display = 'inline-block';
                 document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
@@ -152,9 +146,9 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         lastThreeCorrectURL = [];
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
-        document.getElementById('snippetMessage').style.display = 'none';
-        document.getElementById('shareSnippet').style.display = 'none';
         document.getElementById('copyButton').style.display = 'none';
+        document.getElementById('returnButton').style.display = 'inline-block';
+        document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
         wrongSound.play();
         endURLChallenge(false);
     }
@@ -266,13 +260,6 @@ function endURLChallenge(success) {
         resultElement.innerHTML = "You didn't get all 3 correct. Better luck next time!";
         resultElement.className = 'incorrect';
     }
-    const shareText = success ? "I got all 3 correct on PLUNKO!" : "I couldn't get all 3 correct on PLUNK🏀. Can you?";
-    const currentURL = window.location.href;
-    let shareSnippet = `${shareText}<br>${currentURL}`;
-    document.getElementById('shareSnippet').innerHTML = shareSnippet;
-    document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
-    document.getElementById('snippetMessage').style.display = 'none'; // Hide the snippet message
-    document.getElementById('shareSnippet').style.display = 'none'; // Hide the share snippet
     document.getElementById('copyButton').style.display = 'inline-block';
     document.getElementById('returnButton').style.display = 'inline-block';
     document.getElementById('returnButton').textContent = 'Play again';
