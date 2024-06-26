@@ -66,9 +66,8 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
             document.getElementById('snippetMessage').style.display = 'block';
             document.getElementById('copyButton').style.display = 'inline-block';
-            document.getElementById('returnButton').style.display = 'none';
             consecutivePlunkos++;
-            document.getElementById('plunkosCount').textContent = consecutivePlunkos;
+            document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
             increaseDifficulty();
             correctStreakStandard = 0; // Reset the correct streak after achieving PLUNKO
             lastThreeCorrectStandard = []; // Clear the list of last three correct players after achieving PLUNKO
@@ -81,8 +80,8 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
         wrongSound.play();
-        consecutivePlunkos = 0; // Reset PLUNK🏀 WIN STREAK counter
-        document.getElementById('plunkosCount').textContent = consecutivePlunkos;
+        consecutivePlunkos = 0; // Reset the consecutive plunkos on wrong answer
+        document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
     }
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
 }
@@ -127,10 +126,9 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
                 document.getElementById('snippetMessage').style.display = 'block';
                 document.getElementById('copyButton').style.display = 'inline-block';
-                document.getElementById('returnButton').style.display = 'none';
                 document.getElementById('submitBtn').style.display = 'none';
                 consecutivePlunkos++;
-                document.getElementById('plunkosCount').textContent = consecutivePlunkos;
+                document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
                 increaseDifficulty();
                 correctStreakURL = 0; // Reset the correct streak after achieving PLUNKO
                 lastThreeCorrectURL = []; // Clear the list of last three correct players after achieving PLUNKO
@@ -151,9 +149,9 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
         wrongSound.play();
+        consecutivePlunkos = 0; // Reset the consecutive plunkos on wrong answer
+        document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
         endURLChallenge(false);
-        consecutivePlunkos = 0; // Reset PLUNK🏀 WIN STREAK counter
-        document.getElementById('plunkosCount').textContent = consecutivePlunkos;
     }
 }
 
@@ -168,7 +166,7 @@ function copyToClipboard() {
 }
 
 function loadPlayersData() {
-    fetch('https://raw.githubusercontent.com/khobster/plunkosandbox/main/updated_test_data_with_rarity.json')
+    fetch('https://raw.githubusercontent.com/khobster/plunko/main/updated_test_data_with_rarity.json')
         .then(response => response.json())
         .then(data => {
             playersData = data;
@@ -260,7 +258,6 @@ function endURLChallenge(success) {
     document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
     document.getElementById('snippetMessage').style.display = 'block';
     document.getElementById('copyButton').style.display = 'inline-block';
-    document.getElementById('returnButton').style.display = 'none';
     document.getElementById('submitBtn').style.display = 'none';
 }
 
