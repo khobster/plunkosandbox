@@ -195,6 +195,9 @@ function startStandardPlay() {
         const player = playersData.find(p => p.name === playerName);
         let isCorrect = player && isCloseMatch(userGuess, player.college || 'No College');
         updateStreakAndGenerateSnippetStandard(isCorrect, playerName, document.getElementById('result'), displayRandomPlayer);
+        // Hide the snippet when a new round starts
+        document.getElementById('snippetMessage').style.display = 'none';
+        document.getElementById('copyButton').style.display = 'none';
     };
 }
 
@@ -233,6 +236,9 @@ function startURLChallenge(playerNames) {
                     const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
                     let isCorrect = player && isCloseMatch(userGuess, player.college || 'No College');
                     updateStreakAndGenerateSnippetURL(isCorrect, player.name, document.getElementById('result'), nextPlayer, index, playerNames.length);
+                    // Hide the snippet when a new round starts
+                    document.getElementById('snippetMessage').style.display = 'none';
+                    document.getElementById('copyButton').style.display = 'none';
                 };
             } else {
                 nextPlayer(index + 1); // Skip to the next player if not found
