@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('click', (e) => {
-        if (!tooltip contains(e.target)) {
+        if (!tooltip.contains(e.target)) {
             tooltip.classList.remove('active');
         }
     });
