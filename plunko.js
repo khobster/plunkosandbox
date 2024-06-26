@@ -78,6 +78,8 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
     } else {
         correctStreakStandard = 0;
         lastThreeCorrectStandard = [];
+        consecutivePlunkos = 0; // Reset the plunkos count when the streak is broken
+        document.getElementById('plunkosCount').textContent = '0'; // Update the display
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
         document.getElementById('snippetMessage').style.display = 'none';
@@ -145,6 +147,8 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
     } else {
         correctStreakURL = 0;
         lastThreeCorrectURL = [];
+        consecutivePlunkos = 0; // Reset the plunkos count when the streak is broken
+        document.getElementById('plunkosCount').textContent = '0'; // Update the display
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
         document.getElementById('copyButton').style.display = 'none';
@@ -259,7 +263,7 @@ function startURLChallenge(playerNames) {
 function endURLChallenge(success) {
     const resultElement = document.getElementById('result');
     if (success) {
-        resultElement.innerHTML += "<span class='kaboom'>You got all 3! Challenge someone else!</span>";
+        resultElement.innerHTML += "<span class='kaboom'>You got all 3 correct! Share your success!</span>";
         resultElement.className = 'correct';
     } else {
         resultElement.innerHTML = "You didn't get all 3 correct. Better luck next time!";
