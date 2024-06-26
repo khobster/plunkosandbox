@@ -35,7 +35,7 @@ function isCloseMatch(guess, answer) {
         "hedidnotgotocollege"
     ];
 
-    if (noCollegePhrases.includes(normalizedGuess) && simpleAnswer === '') {
+    if (noCollegePhrases includes (normalizedGuess) && simpleAnswer === '') {
         return true;
     }
 
@@ -43,7 +43,7 @@ function isCloseMatch(guess, answer) {
         return true;
     }
 
-    return simpleAnswer.includes(simpleGuess);
+    return simpleAnswer includes (simpleGuess);
 }
 
 function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultElement, nextPlayerCallback) {
@@ -65,7 +65,9 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             document.getElementById('shareSnippet').innerHTML = shareText;
             document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
             document.getElementById('snippetMessage').style.display = 'block';
+            document.getElementById('shareSnippet').style.display = 'block';
             document.getElementById('copyButton').style.display = 'inline-block';
+            document.getElementById('returnButton').style.display = 'inline-block';
             consecutivePlunkos++;
             document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
             increaseDifficulty();
@@ -82,6 +84,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         document.getElementById('snippetMessage').style.display = 'none';
         document.getElementById('shareSnippet').style.display = 'none';
         document.getElementById('copyButton').style.display = 'none';
+        document.getElementById('returnButton').style.display = 'none';
         wrongSound.play();
     }
     setTimeout(nextPlayerCallback, 3000); // Show next player after a delay
@@ -125,8 +128,8 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
             setTimeout(() => {
                 document.getElementById('shareSnippet').innerHTML = shareText;
                 document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
-                document.getElementById('snippetMessage').style.display = 'none'; // Hide the snippet message
-                document.getElementById('shareSnippet').style.display = 'none'; // Hide the share snippet
+                document.getElementById('snippetMessage').style.display = 'block';
+                document.getElementById('shareSnippet').style.display = 'block';
                 document.getElementById('copyButton').style.display = 'inline-block';
                 document.getElementById('returnButton').style.display = 'inline-block';
                 document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
@@ -155,6 +158,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         document.getElementById('snippetMessage').style.display = 'none';
         document.getElementById('shareSnippet').style.display = 'none';
         document.getElementById('copyButton').style.display = 'none';
+        document.getElementById('returnButton').style.display = 'none';
         wrongSound.play();
         endURLChallenge(false);
     }
@@ -242,6 +246,7 @@ function startURLChallenge(playerNames) {
                     document.getElementById('snippetMessage').style.display = 'none';
                     document.getElementById('shareSnippet').style.display = 'none';
                     document.getElementById('copyButton').style.display = 'none';
+                    document.getElementById('returnButton').style.display = 'none';
 
                     const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
                     let isCorrect = player && isCloseMatch(userGuess, player.college || 'No College');
@@ -270,12 +275,11 @@ function endURLChallenge(success) {
     const currentURL = window.location.href;
     let shareSnippet = `${shareText}<br>${currentURL}`;
     document.getElementById('shareSnippet').innerHTML = shareSnippet;
-    document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
     document.getElementById('snippetMessage').style.display = 'none'; // Hide the snippet message
     document.getElementById('shareSnippet').style.display = 'none'; // Hide the share snippet
     document.getElementById('copyButton').style.display = 'inline-block';
     document.getElementById('returnButton').style.display = 'inline-block';
-    document.getElementById('returnButton').textContent = 'Play again';
+    document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
     document.getElementById('submitBtn').style.display = 'none';
 }
 
@@ -330,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('click', (e) => {
-        if (!tooltip.contains(e.target)) {
+        if (!tooltip contains (e.target)) {
             tooltip.classList.remove('active');
         }
     });
