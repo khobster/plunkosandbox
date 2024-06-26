@@ -60,14 +60,14 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
         } else if (correctStreakStandard === 3) {
             resultElement.innerHTML = "<span class='kaboom'>PLUNKO!</span>";
             const encodedPlayers = encodeURIComponent(lastThreeCorrectStandard.join(','));
-            const shareLink = https://khobster.github.io/plunkosandbox?players=${encodedPlayers};
-            let shareText = I challenge you to this PLUNK🏀:\n${shareLink};
+            const shareLink = `https://khobster.github.io/plunkosandbox?players=${encodedPlayers}`;
+            let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
             document.getElementById('shareSnippet').innerHTML = shareText;
             document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
             document.getElementById('snippetMessage').style.display = 'block';
             document.getElementById('copyButton').style.display = 'inline-block';
             consecutivePlunkos++;
-            document.getElementById('plunkosCount').textContent = ${consecutivePlunkos};
+            document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
             increaseDifficulty();
             correctStreakStandard = 0; // Reset the correct streak after achieving PLUNKO
             lastThreeCorrectStandard = []; // Clear the list of last three correct players after achieving PLUNKO
@@ -120,8 +120,8 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
 
             // Add share snippet and buttons
             const encodedPlayers = encodeURIComponent(lastThreeCorrectURL.join(','));
-            const shareLink = https://khobster.github.io/plunkosandbox?players=${encodedPlayers};
-            let shareText = I challenge you to this PLUNK🏀:\n${shareLink};
+            const shareLink = `https://khobster.github.io/plunkosandbox?players=${encodedPlayers}`;
+            let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
             setTimeout(() => {
                 document.getElementById('shareSnippet').innerHTML = shareText;
                 document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
@@ -132,7 +132,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
                 document.getElementById('submitBtn').style.display = 'none';
                 consecutivePlunkos++;
-                document.getElementById('plunkosCount').textContent = ${consecutivePlunkos};
+                document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
                 increaseDifficulty();
                 correctStreakURL = 0; // Reset the correct streak after achieving PLUNKO
                 lastThreeCorrectURL = []; // Clear the list of last three correct players after achieving PLUNKO
@@ -268,7 +268,7 @@ function endURLChallenge(success) {
     }
     const shareText = success ? "I got all 3 correct on PLUNKO!" : "I couldn't get all 3 correct on PLUNK🏀. Can you?";
     const currentURL = window.location.href;
-    let shareSnippet = ${shareText}<br>${currentURL};
+    let shareSnippet = `${shareText}<br>${currentURL}`;
     document.getElementById('shareSnippet').innerHTML = shareSnippet;
     document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
     document.getElementById('snippetMessage').style.display = 'none'; // Hide the snippet message
