@@ -63,9 +63,8 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             const shareLink = `https://khobster.github.io/plunkosandbox?players=${encodedPlayers}`;
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
             document.getElementById('shareSnippet').innerHTML = shareText;
-            document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
+            document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
             document.getElementById('snippetMessage').style.display = 'block';
-            document.getElementById('shareSnippet').style.display = 'block';
             document.getElementById('copyButton').style.display = 'inline-block';
             consecutivePlunkos++;
             document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
@@ -125,7 +124,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
             let shareText = `I challenge you to this PLUNK🏀:\n${shareLink}`;
             setTimeout(() => {
                 document.getElementById('shareSnippet').innerHTML = shareText;
-                document.getElementById('snippetMessage').innerHTML = 'Send it to your pals:';
+                document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
                 document.getElementById('snippetMessage').style.display = 'block';
                 document.getElementById('shareSnippet').style.display = 'block';
                 document.getElementById('copyButton').style.display = 'inline-block';
@@ -194,6 +193,11 @@ function loadPlayersData() {
 function startStandardPlay() {
     displayRandomPlayer();
     document.getElementById('submitBtn').onclick = function() {
+        // Hide the snippet and copy button on the next question attempt
+        document.getElementById('snippetMessage').style.display = 'none';
+        document.getElementById('shareSnippet').style.display = 'none';
+        document.getElementById('copyButton').style.display = 'none';
+
         const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
         const playerName = document.getElementById('playerName').textContent;
         const player = playersData.find(p => p.name === playerName);
@@ -234,12 +238,14 @@ function startURLChallenge(playerNames) {
             if (player) {
                 displayPlayer(player);
                 document.getElementById('submitBtn').onclick = function() {
-                    const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
-                    let isCorrect = player && isCloseMatch(userGuess, player.college || 'No College');
-                    updateStreakAndGenerateSnippetURL(isCorrect, player.name, document.getElementById('result'), nextPlayer, index, playerNames.length);
+                    // Hide the snippet and copy button on the next question attempt
                     document.getElementById('snippetMessage').style.display = 'none';
                     document.getElementById('shareSnippet').style.display = 'none';
                     document.getElementById('copyButton').style.display = 'none';
+
+                    const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
+                    let isCorrect = player && isCloseMatch(userGuess, player.college || 'No College');
+                    updateStreakAndGenerateSnippetURL(isCorrect, player.name, document.getElementById('result'), nextPlayer, index, playerNames.length);
                 };
             } else {
                 nextPlayer(index + 1); // Skip to the next player if not found
@@ -269,7 +275,7 @@ function endURLChallenge(success) {
     document.getElementById('shareSnippet').style.display = 'block';
     document.getElementById('copyButton').style.display = 'inline-block';
     document.getElementById('returnButton').style.display = 'inline-block';
-    document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
+    document.getElementById('returnButton').textContent = 'Play again';
     document.getElementById('submitBtn').style.display = 'none';
 }
 
@@ -324,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('click', (e) => {
-        if (!tooltip.contains(e.target)) {
+        if (!tooltip contains(e.target)) {
             tooltip.classList.remove('active');
         }
     });
