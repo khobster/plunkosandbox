@@ -47,10 +47,6 @@ function isCloseMatch(guess, answer) {
 }
 
 function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultElement, nextPlayerCallback) {
-    // Hide the snippet and copy button on next question attempt
-    document.getElementById('snippetMessage').style.display = 'none';
-    document.getElementById('copyButton').style.display = 'none';
-
     if (isCorrect) {
         correctStreakStandard++;
         lastThreeCorrectStandard.push(playerName);
@@ -100,10 +96,6 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         playerName,
         totalPlayers
     });
-
-    // Hide the snippet and copy button on next question attempt
-    document.getElementById('snippetMessage').style.display = 'none';
-    document.getElementById('copyButton').style.display = 'none';
 
     if (isCorrect) {
         correctStreakURL++;
@@ -194,6 +186,10 @@ function loadPlayersData() {
 function startStandardPlay() {
     displayRandomPlayer();
     document.getElementById('submitBtn').onclick = function() {
+        // Hide the snippet and copy button on next question attempt
+        document.getElementById('snippetMessage').style.display = 'none';
+        document.getElementById('copyButton').style.display = 'none';
+
         const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
         const playerName = document.getElementById('playerName').textContent;
         const player = playersData.find(p => p.name === playerName);
@@ -234,6 +230,10 @@ function startURLChallenge(playerNames) {
             if (player) {
                 displayPlayer(player);
                 document.getElementById('submitBtn').onclick = function() {
+                    // Hide the snippet and copy button on next question attempt
+                    document.getElementById('snippetMessage').style.display = 'none';
+                    document.getElementById('copyButton').style.display = 'none';
+
                     const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
                     let isCorrect = player && isCloseMatch(userGuess, player.college || 'No College');
                     updateStreakAndGenerateSnippetURL(isCorrect, player.name, document.getElementById('result'), nextPlayer, index, playerNames.length);
