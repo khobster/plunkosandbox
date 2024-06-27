@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Doodle&display=swap');
 
 #app {
     text-align: center;
@@ -117,10 +118,15 @@
 
 #plunkosCounter {
     font-size: 24px;
-    font-family: 'Fredoka One', sans-serif;
+    font-family: 'Rubik Doodle', sans-serif; /* Updated font-family */
     margin-top: 10px;
     color: #4CAF50;
     animation: rainbow 2s infinite;
+}
+
+#plunkosCount {
+    font-weight: bold;
+    font-family: 'Rubik Doodle', sans-serif; /* Updated font-family */
 }
 
 @keyframes rainbow {
@@ -130,10 +136,6 @@
     60% {color: green;}
     80% {color: blue;}
     100% {color: red;}
-}
-
-#plunkosCount {
-    font-weight: bold;
 }
 
 .correct {
