@@ -75,7 +75,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             correctStreakStandard = 0; // Reset the correct streak after achieving PLUNKO
             lastThreeCorrectStandard = []; // Clear the list of last three correct players after achieving PLUNKO
         }
-        document.getElementById('plunkosCount').textContent = `${cumulativeRarityScore}`;
+        document.getElementById('plunkosCount').textContent = `${Math.round(cumulativeRarityScore)}`;
         resultElement.className = 'correct';
         correctSound.play();
     } else {
@@ -134,7 +134,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 document.getElementById('returnButton').style.display = 'inline-block';
                 document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
                 document.getElementById('submitBtn').style.display = 'none';
-                document.getElementById('plunkosCount').textContent = `${cumulativeRarityScore}`;
+                document.getElementById('plunkosCount').textContent = `${Math.round(cumulativeRarityScore)}`;
                 increaseDifficulty();
                 correctStreakURL = 0; // Reset the correct streak after achieving PLUNKO
                 lastThreeCorrectURL = []; // Clear the list of last three correct players after achieving PLUNKO
