@@ -4,7 +4,7 @@ let lastThreeCorrectStandard = [];
 let correctStreakURL = 0;
 let lastThreeCorrectURL = [];
 let currentDifficultyLevel = 1;
-let consecutivePlunkos = 0;
+let cumulativeRarityScore = 0;
 
 const correctSound = new Audio('https://vanillafrosting.agency/wp-content/uploads/2023/11/bing-bong.mp3');
 const wrongSound = new Audio('https://vanillafrosting.agency/wp-content/uploads/2023/11/incorrect-answer-for-plunko.mp3');
@@ -47,9 +47,13 @@ function isCloseMatch(guess, answer) {
 }
 
 function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultElement, nextPlayerCallback) {
-    if (isCorrect) {
+    const player = playersData.find(p => p.name === playerName);
+
+    if (isCorrect && player) {
         correctStreakStandard++;
         lastThreeCorrectStandard.push(playerName);
+        cumulativeRarityScore += player.rarity_score;
+
         if (lastThreeCorrectStandard.length > 3) {
             lastThreeCorrectStandard.shift();
         }
@@ -67,18 +71,17 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             document.getElementById('snippetMessage').style.display = 'block'; // Show the message
             document.getElementById('shareSnippet').style.display = 'block'; // Show the share snippet
             document.getElementById('copyButton').style.display = 'inline-block';
-            consecutivePlunkos++;
-            document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
             increaseDifficulty();
             correctStreakStandard = 0; // Reset the correct streak after achieving PLUNKO
             lastThreeCorrectStandard = []; // Clear the list of last three correct players after achieving PLUNKO
         }
+        document.getElementById('plunkosCount').textContent = `${cumulativeRarityScore}`;
         resultElement.className = 'correct';
         correctSound.play();
     } else {
         correctStreakStandard = 0;
         lastThreeCorrectStandard = [];
-        consecutivePlunkos = 0; // Reset the plunkos count when the streak is broken
+        cumulativeRarityScore = 0; // Reset the cumulative rarity score when the streak is broken
         document.getElementById('plunkosCount').textContent = '0'; // Update the display
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
@@ -103,9 +106,13 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         totalPlayers
     });
 
-    if (isCorrect) {
+    const player = playersData.find(p => p.name === playerName);
+
+    if (isCorrect && player) {
         correctStreakURL++;
         lastThreeCorrectURL.push(playerName);
+        cumulativeRarityScore += player.rarity_score;
+
         if (lastThreeCorrectURL.length > 3) {
             lastThreeCorrectURL.shift();
         }
@@ -127,8 +134,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
                 document.getElementById('returnButton').style.display = 'inline-block';
                 document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
                 document.getElementById('submitBtn').style.display = 'none';
-                consecutivePlunkos++;
-                document.getElementById('plunkosCount').textContent = `${consecutivePlunkos}`;
+                document.getElementById('plunkosCount').textContent = `${cumulativeRarityScore}`;
                 increaseDifficulty();
                 correctStreakURL = 0; // Reset the correct streak after achieving PLUNKO
                 lastThreeCorrectURL = []; // Clear the list of last three correct players after achieving PLUNKO
@@ -147,7 +153,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
     } else {
         correctStreakURL = 0;
         lastThreeCorrectURL = [];
-        consecutivePlunkos = 0; // Reset the plunkos count when the streak is broken
+        cumulativeRarityScore = 0; // Reset the cumulative rarity score when the streak is broken
         document.getElementById('plunkosCount').textContent = '0'; // Update the display
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
