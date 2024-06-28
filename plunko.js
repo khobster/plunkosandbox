@@ -70,6 +70,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
             document.getElementById('snippetMessage').style.display = 'block'; // Show the message
             document.getElementById('shareSnippet').style.display = 'block'; // Show the share snippet
+            document.getElementById('copyButton').setAttribute('data-url', shareLink); // Set the share link as data-url
             document.getElementById('copyButton').style.display = 'inline-block';
             increaseDifficulty();
             correctStreakStandard = 0; // Reset the correct streak after achieving PLUNKO
@@ -166,8 +167,8 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
 }
 
 function copyToClipboard() {
-    const url = window.location.href;
-    navigator.clipboard.writeText(url).then(() => {
+    const textToCopy = document.getElementById('copyButton').getAttribute('data-url') || window.location.href;
+    navigator.clipboard.writeText(textToCopy).then(() => {
         const copyButton = document.getElementById('copyButton');
         const originalText = copyButton.textContent;
         copyButton.textContent = 'Copied!';
@@ -276,6 +277,7 @@ function endURLChallenge(success) {
         resultElement.className = 'incorrect';
     }
     document.getElementById('copyButton').style.display = 'inline-block';
+    document.getElementById('copyButton').setAttribute('data-url', window.location.href); // Set the current URL as data-url
     document.getElementById('returnButton').style.display = 'inline-block';
     document.getElementById('returnButton').textContent = 'Play again';
     document.getElementById('submitBtn').style.display = 'none';
