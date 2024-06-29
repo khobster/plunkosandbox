@@ -167,7 +167,9 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
 }
 
 function copyToClipboard() {
-    const textToCopy = document.getElementById('copyButton').getAttribute('data-url') || window.location.href;
+    const snippetText = document.getElementById('shareSnippet').textContent;
+    const textToCopy = snippetText || window.location.href;
+
     navigator.clipboard.writeText(textToCopy).then(() => {
         const copyButton = document.getElementById('copyButton');
         const originalText = copyButton.textContent;
