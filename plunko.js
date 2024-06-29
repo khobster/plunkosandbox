@@ -272,7 +272,7 @@ function startURLChallenge(playerNames) {
 function endURLChallenge(success) {
     const resultElement = document.getElementById('result');
     if (success) {
-        resultElement.innerHTML += "<span class='kaboom'>You got all 3 correct! Share your success!</span>";
+        resultElement.innerHTML += "<span class='kaboom'>You got all 3 correct! Hit the Copy Button & Challenge a Pal!</span>";
         resultElement.className = 'correct';
     } else {
         resultElement.innerHTML = "You didn't get all 3 correct. Better luck next time!";
