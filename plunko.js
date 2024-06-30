@@ -70,7 +70,7 @@ function updateStreakAndGenerateSnippetStandard(isCorrect, playerName, resultEle
             document.getElementById('snippetMessage').innerHTML = 'Challenge friends with this PLUNK🏀:';
             document.getElementById('snippetMessage').style.display = 'block'; // Show the message
             document.getElementById('shareSnippet').style.display = 'block'; // Show the share snippet
-            document.getElementById('copyButton').setAttribute('data-url', shareLink); // Set the share link as data-url
+            document.getElementById('copyButton').setAttribute('data-snippet', shareText); // Set the share snippet as data-snippet
             document.getElementById('copyButton').style.display = 'inline-block';
             increaseDifficulty();
             correctStreakStandard = 0; // Reset the correct streak after achieving PLUNKO
@@ -131,7 +131,14 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
 
             // Add share snippet and buttons
             setTimeout(() => {
+                const shareText = `I got all 3 correct in PLUNKO! Check it out: ${window.location.href}`;
+                document.getElementById('copyButton').setAttribute('data-snippet', shareText); // Set the share snippet as data-snippet
                 document.getElementById('copyButton').style.display = 'inline-block';
+
+                const proofText = `Proof I nailed the PLUNK🏀 challenge: ${window.location.href}`;
+                document.getElementById('proofButton').setAttribute('data-snippet', proofText); // Set proof text as data-snippet
+                document.getElementById('proofButton').style.display = 'inline-block'; // Show proof button
+
                 document.getElementById('returnButton').style.display = 'inline-block';
                 document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
                 document.getElementById('submitBtn').style.display = 'none';
@@ -159,6 +166,7 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
         resultElement.textContent = 'Wrong answer. Try again!';
         resultElement.className = 'incorrect';
         document.getElementById('copyButton').style.display = 'none';
+        document.getElementById('proofButton').style.display = 'none'; // Hide proof button on incorrect
         document.getElementById('returnButton').style.display = 'inline-block';
         document.getElementById('returnButton').textContent = 'Start a Fresh PLUNK🏀';
         wrongSound.play();
@@ -167,14 +175,13 @@ function updateStreakAndGenerateSnippetURL(isCorrect, playerName, resultElement,
 }
 
 function copyToClipboard() {
-    const snippetText = document.getElementById('shareSnippet').textContent;
+    const snippetText = this.getAttribute('data-snippet');
     const textToCopy = snippetText || window.location.href;
 
     navigator.clipboard.writeText(textToCopy).then(() => {
-        const copyButton = document.getElementById('copyButton');
-        const originalText = copyButton.textContent;
-        copyButton.textContent = 'Copied!';
-        setTimeout(() => copyButton.textContent = originalText, 2000);
+        const originalText = this.textContent;
+        this.textContent = 'Copied!';
+        setTimeout(() => this.textContent = originalText, 2000);
     });
 }
 
@@ -209,6 +216,7 @@ function startStandardPlay() {
         document.getElementById('snippetMessage').style.display = 'none';
         document.getElementById('shareSnippet').style.display = 'none';
         document.getElementById('copyButton').style.display = 'none';
+        document.getElementById('proofButton').style.display = 'none'; // Hide proof button in standard play
 
         const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
         const playerName = document.getElementById('playerName').textContent;
@@ -254,6 +262,7 @@ function startURLChallenge(playerNames) {
                     document.getElementById('snippetMessage').style.display = 'none';
                     document.getElementById('shareSnippet').style.display = 'none';
                     document.getElementById('copyButton').style.display = 'none';
+                    document.getElementById('proofButton').style.display = 'none'; // Hide proof button in URL play until needed
 
                     const userGuess = document.getElementById('collegeGuess').value.trim().toLowerCase();
                     let isCorrect = player && isCloseMatch(userGuess, player.college || 'No College');
@@ -278,8 +287,16 @@ function endURLChallenge(success) {
         resultElement.innerHTML = "You didn't get all 3 correct. Better luck next time!";
         resultElement.className = 'incorrect';
     }
+    const shareText = `Check out my PLUNKO score: ${Math.round(cumulativeRarityScore)}! ${window.location.href}`;
+    document.getElementById('copyButton').setAttribute('data-snippet', shareText); // Set the current snippet as data-snippet
     document.getElementById('copyButton').style.display = 'inline-block';
-    document.getElementById('copyButton').setAttribute('data-url', window.location.href); // Set the current URL as data-url
+
+    if (success) {
+        const proofText = `Proof I nailed the PLUNK🏀 challenge: ${window.location.href}`;
+        document.getElementById('proofButton').setAttribute('data-snippet', proofText); // Set proof text as data-snippet
+        document.getElementById('proofButton').style.display = 'inline-block'; // Show proof button
+    }
+
     document.getElementById('returnButton').style.display = 'inline-block';
     document.getElementById('returnButton').textContent = 'Play again';
     document.getElementById('submitBtn').style.display = 'none';
@@ -324,6 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('copyButton').addEventListener('click', copyToClipboard);
+    document.getElementById('proofButton').addEventListener('click', copyToClipboard); // Add event listener for proof button
     document.getElementById('returnButton').addEventListener('click', () => {
         window.location.href = 'https://khobster.github.io/plunkosandbox';
     });
