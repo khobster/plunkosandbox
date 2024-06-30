@@ -281,18 +281,18 @@ function startURLChallenge(playerNames) {
 function endURLChallenge(success) {
     const resultElement = document.getElementById('result');
     if (success) {
-        resultElement.innerHTML += "<span class='kaboom'>You got all 3 correct! Hit the Copy Button & Challenge a Pal!</span>";
+        resultElement.innerHTML += "<span class='kaboom'>Hit Copy & Challenge a Pal! Or Grab Your Receipt!</span>";
         resultElement.className = 'correct';
     } else {
         resultElement.innerHTML = "You didn't get all 3 correct. Better luck next time!";
         resultElement.className = 'incorrect';
     }
-    const shareText = `Check out my PLUNKO score: ${Math.round(cumulativeRarityScore)}! ${window.location.href}`;
+    const shareText = `Can you match my PLUNK🏀 score? ${Math.round(cumulativeRarityScore)}! ${window.location.href}`;
     document.getElementById('copyButton').setAttribute('data-snippet', shareText); // Set the current snippet as data-snippet
     document.getElementById('copyButton').style.display = 'inline-block';
 
     if (success) {
-        const proofText = `Proof I nailed the PLUNK🏀 challenge: ${window.location.href}`;
+        const proofText = `PROOF I nailed your PLUNK🏀 challenge!🧾 ${window.location.href}`;
         document.getElementById('proofButton').setAttribute('data-snippet', proofText); // Set proof text as data-snippet
         document.getElementById('proofButton').style.display = 'inline-block'; // Show proof button
     }
