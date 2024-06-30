@@ -247,3 +247,21 @@
     font-family: 'Archivo Narrow', sans-serif;
     display: none; /* Initially hidden */
 }
+
+#proofButton {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: background-color 0.3s;
+    font-family: 'Archivo Narrow', sans-serif;
+    display: none; /* Initially hidden */
+}
+
+#proofButton:hover {
+    background-color: darkred;
+}
