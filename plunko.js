@@ -281,7 +281,7 @@ function startURLChallenge(playerNames) {
 function endURLChallenge(success) {
     const resultElement = document.getElementById('result');
     if (success) {
-        resultElement.innerHTML += "<span class='kaboom'>Hit Copy & Challenge a Pal! Or Grab Your Receipt!</span>";
+        resultElement.innerHTML += "<span class='kaboom'><br>Hit Copy & Challenge a Pal! Or Grab Your Receipt!</span>";
         resultElement.className = 'correct';
     } else {
         resultElement.innerHTML = "You didn't get all 3 correct. Better luck next time!";
